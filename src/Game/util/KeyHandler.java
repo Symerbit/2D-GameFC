@@ -1,0 +1,92 @@
+package Game.util;
+
+import Game.GamePanel;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
+
+public class KeyHandler implements KeyListener {
+
+    public static List<Key> keys = new ArrayList<Key>();
+
+    public class Key {
+        public int presses, absorbs;
+        public boolean down, clicked;
+
+        public Key() { //elke key heeft een class (alleen die in de game gebruikt worden)
+            keys.add(this);
+        }
+
+        public void toggle(boolean pressed) { //checkt of hij ingedrukt wordt
+            if (pressed != down) {
+                down = pressed; //ja of nee?
+            }
+            if (pressed) {
+                presses++; //indrukken tot hij losgelaten wordt
+            }
+        }
+
+        public void tick() {  //heeft hij geklikt?
+            if (absorbs < presses) {
+                absorbs++;
+                clicked = true;
+            } else {
+                clicked = false;
+            }
+        }
+    }
+
+    // DE KEYS!
+    public Key up = new Key();
+    public Key down = new Key();
+    public Key left = new Key();
+    public Key right = new Key();
+    public Key attack = new Key();
+    public Key menu = new Key();
+    public Key enter = new Key();
+    public Key escape = new Key();
+
+    public void releaseAll() {
+        for(int i = 0; i < keys.size(); i++) {
+            keys.get(i).down = false;
+        }
+    }
+
+    public void tick() {
+        for(int i = 0; i < keys.size(); i++) {
+            keys.get(i).tick();
+        }
+    }
+
+    public KeyHandler(GamePanel game) {
+        game.addKeyListener(this);
+    }
+
+    public void toggle(KeyEvent e, boolean pressed) {
+            if(e.getKeyCode() == KeyEvent.VK_W) up.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_S) down.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_A) left.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_D) right.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_SPACE) attack.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_TAB) menu.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle(pressed);
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) escape.toggle(pressed);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // NIKS DOEN!
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        toggle(e, true);
+        System.out.println("TOETS!");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        toggle(e, false);
+    }
+}
