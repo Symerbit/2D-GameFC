@@ -2,7 +2,7 @@ package Game.graphics;
 
 import java.awt.image.BufferedImage;
 
-public class Anime {
+public class Animation {
 
     private BufferedImage[] images;
     private int currentFrame;
@@ -13,12 +13,12 @@ public class Anime {
 
     private int timesPlayed;
 
-    public Anime(BufferedImage[] frames) {
+    public Animation(BufferedImage[] frames) {
         timesPlayed = 0;
         setFrames(frames);
     }
 
-    public Anime() {
+    public Animation() {
         timesPlayed = 0;
     }
 
@@ -35,8 +35,8 @@ public class Anime {
     public void setFrame(int i) { currentFrame = i; }
     public void setNumFrames(int i) { numFrames = i; }
 
-    public void update() {
-        if(delay == -1) return;
+    public void update() { //frame cycle
+        if(delay == -1) return; //negative = no delay = return
 
         count++;
 
@@ -44,9 +44,16 @@ public class Anime {
             currentFrame++;
             count = 0;
         }
-        if(currentFrame == numFrames) {
+        if(currentFrame == numFrames) { //set frames delay - twee keer cycle door loop method
             currentFrame = 0;
             timesPlayed++;
         }
     }
+
+    public int getDelay() {return delay; }
+    public int getFrame() {return currentFrame; }
+    public int getCount() {return count; }
+    public BufferedImage getImage() { return frames[currentFrame]; }
+    public boolean hasPlayedOnce() {return timesPlayed > 0;}
+    public boolean hasPlayed(int i) {return TimesPlayed == i;}
 }
