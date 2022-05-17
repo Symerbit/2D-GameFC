@@ -76,23 +76,17 @@ public class Font {
         }
     }
 
-    public BufferedImage getFontSheet() {return FONTSHEET; }
+    public BufferedImage getFontSheet() { return FONTSHEET; }
 
-    public BufferedImage getLetter(int x, int y) {return FONTSHEET.getSubimage(x * w, y * h, w, h);}
+    public BufferedImage getLetter(int x, int y) { return FONTSHEET.getSubimage(x * w, y * h, w, h); }
 
     public BufferedImage getFont(char letter) {
-        int value = letter;
+        int value = letter - 65;
 
         int x = value % wLetter;
-        int y = value / hLetter;
-
-        return FONTSHEET.getSubimage(x, y, w, h);
+        int y = value / wLetter;
+        System.out.println(x + ". " + y);
+        return getLetter(x, y);
     }
-
-
-
-    // ???
-
-
 }
 

@@ -5,7 +5,7 @@ import Game.util.KeyHandler;
 import Game.util.MouseHandler;
 import Game.util.Vector2f;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 public class GameStateManager {
@@ -69,5 +69,4 @@ public class GameStateManager {
                 states.get(i).render(g);
             }
         }
-
 }

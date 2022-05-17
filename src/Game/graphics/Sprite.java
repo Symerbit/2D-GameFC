@@ -1,15 +1,15 @@
 package Game.graphics;
 
 import Game.util.Vector2f;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Sprite<yOffset, xOffset> {
-    private final BufferedImage SPRITESHEET = null;
+
+    private static Object font;
+    private BufferedImage SPRITESHEET = null;
     private BufferedImage[][] spriteArray;
     private final int TILE_SIZE = 32;
     public int w;
@@ -26,11 +26,10 @@ public class Sprite<yOffset, xOffset> {
 
         wSprite = SPRITESHEET.getWidth() / w;
         hSprite = SPRITESHEET.getHeight() / h;
-
         loadSpriteArray();
     }
 
-    public Sprite(String file, int w, int h){
+    public Sprite(String file, int w, int h) {
         this.w = w;
         this.h = h;
 
@@ -39,7 +38,6 @@ public class Sprite<yOffset, xOffset> {
 
         wSprite = SPRITESHEET.getWidth() / w;
         hSprite = SPRITESHEET.getHeight() / h;
-
         loadSpriteArray();
     }
 
@@ -53,7 +51,7 @@ public class Sprite<yOffset, xOffset> {
         wSprite = SPRITESHEET.getWidth() / w;
     }
 
-    public void setHeight (int i){
+    public void setHeight(int i) {
         h = i;
         hSprite = SPRITESHEET.getHeight() / h;
     }
@@ -65,14 +63,14 @@ public class Sprite<yOffset, xOffset> {
         BufferedImage sprite = null;
         try {
             sprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(file));
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("ERROR: Could not load file: " + file);
         }
 
         return sprite;
     }
 
-    public void loadSpriteArray() {
+    public void loadSpriteArray() {  //totale hoeveelheid sprites
         spriteArray = new BufferedImage[wSprite][hSprite];
 
         for(int x = 0; x < wSprite; x++) {
@@ -83,7 +81,8 @@ public class Sprite<yOffset, xOffset> {
     }
 
     public BufferedImage getSPRITESHEET() {
-        return SPRITESHEET; }
+        return SPRITESHEET;
+    }
 
     public BufferedImage getSprite(int x, int y) {
         return SPRITESHEET.getSubimage(x * w, y * h, w, h);
@@ -97,44 +96,32 @@ public class Sprite<yOffset, xOffset> {
         return spriteArray;
     }
 
-    public static void drawArray(Graphics2D g, ArrayList<BufferedImage> img, Vector2f pos, int width, int height, int xOffset, int yOffset) { //Fonts
-            float x = pos.x;
-            float y = pos.y;
+    public static void drawArray(Graphics2D g, ArrayList<BufferedImage> img, Vector2f pos, int width, int height, int xOffset, int yOffset) { //img
+        float x = pos.x;
+        float y = pos.y;
 
-            for(int i = 0; i < img.size(); i++) {
-                if(img.get(i) != null) {
-                    g.drawImage(img.get(i), (int) x, (int) y, width, height, null);
-                }
-
-                x += xOffset;
-                y += yOffset;
-    }
-
-    public static void drawArray(Graphics2D g, font f, String word, Vector2f pos, int width, int height, int xOffset, int yOffset) {
-            float x = pos.x;
-            float y = pos.y;
-
-            for(int i = 0; i < word.length(); i++) {
-                if (word.charAt(i) != 32)
-                    g.drawImage(f.getFont(word.charAt(i)), (int) x, (int) y, width, height, null);
+        for(int i = 0; i < img.size(); i++) {
+            if (img.get(i) != null) {
+                g.drawImage(img.get(i), (int) x, (int) y, width, height, null);
             }
-    }
 
             x += xOffset;
             y += yOffset;
-}
-
-public static void drawArray(Graphics2D g, Font f, String word, Vector2f pos, int width, int height, int xOffset, int yOffset) {
-    float x = pos.x;
-    float y = pos.y;
-
-    for(int i = 0; < word.length(); i++) {
-        if(word.charAt(i) != 32)
-            g.drawImage(f.getFont(word.charAt(i)), (int) x, (int) y, width, height, null);
+        }
     }
 
-    x += xOffset;
-    y += yOffset;
+    public static void drawArray(Graphics2D g, Font f, String word, Vector2f pos, int width, int height, int xOffset, int yOffset) { //fonts
+        float x = pos.x;
+        float y = pos.y;
+
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != 32) // THE SPACE
+                g.drawImage(f.getFont(word.charAt(i)), (int) x, (int) y, width, height, null);
+            x += xOffset;
+            y += yOffset;
+        }
+    }
 }
+
 
 
