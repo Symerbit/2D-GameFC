@@ -9,7 +9,7 @@ public class Window extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //sluit af bij sluiten
         setContentPane(new GamePanel(1920, 1080)); //de window regio
         pack();
-        this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
+        this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH); //Maximize de window
         setLocationRelativeTo(null);
         setVisible(true);
     }
