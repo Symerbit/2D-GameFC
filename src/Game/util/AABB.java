@@ -5,6 +5,8 @@ import Game.entities.Entity;
 public class AABB { // AABB = Collision Class
 
     private Vector2f pos;
+    private float xOffset = 0;
+    private float yOffset = 0;
     private float w;
     private float h;
     private float r; // enemy chase
@@ -13,7 +15,7 @@ public class AABB { // AABB = Collision Class
     private Entity e;
 
     public AABB(Vector2f pos, int w, int h) {
-        this pos = pos;
+        this.pos = pos;
         this.w = w;
         this.h = h;
 
@@ -52,7 +54,7 @@ public class AABB { // AABB = Collision Class
     public void setHeight(float f) { h = f; }
 
     public void setXOffset(float f) { xOffset = f; }
-    public void setYOffset(float f) { yOffset = f;}
+    public void setYOffset(float f) { yOffset = f; }
 
     public boolean collides(AABB bBox) {
         float ax = ((pos.getWorldVar().x + (xOffset)) + (w / 2));
@@ -69,13 +71,13 @@ public class AABB { // AABB = Collision Class
         return false;
     }
 
-    public boolean colCircleBox(AABB aBox) {
+    public boolean colCircleBox(AABB aBox) { //collisions tussen circle en box
 
         float cx = (float) (pos.getWorldVar().x + r / Math.sqrt(2) - e.getSize() / Math.sqrt(2));
         float cy = (float) (pos.getWorldVar().y + r / Math.sqrt(2) - e.getSize() / Math.sqrt(2));
 
-        float xDelta = cx - Math.max(aBox.pos.getWorldVar().x + (aBox.getWidth() / 2), Math.mix(cx, aBox.pos.getWorldVar().x ));
-        float yDelta = cx - Math.max(aBox.pos.getWorldVar().y + (aBox.getWidth() / 2), Math.mix(cy, aBox.pos.getWorldVar().y ));
+        float xDelta = cx - Math.max(aBox.pos.getWorldVar().x + (aBox.getWidth() / 2), Math.min(cx, aBox.pos.getWorldVar().x ));
+        float yDelta = cx - Math.max(aBox.pos.getWorldVar().y + (aBox.getWidth() / 2), Math.min(cy, aBox.pos.getWorldVar().y ));
 
         if((xDelta * xDelta + yDelta * yDelta)< ((this.r / Math.sqrt(2) * (this.r / Math.sqrt(2))))) {
             return true;

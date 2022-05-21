@@ -12,6 +12,7 @@ public class Animation {
     private int delay;
 
     private int timesPlayed;
+    private BufferedImage[] frames;
 
     public Animation(BufferedImage[] frames) {
         timesPlayed = 0;
@@ -50,10 +51,10 @@ public class Animation {
         }
     }
 
-    public int getDelay() {return delay; }
-    public int getFrame() {return currentFrame; }
-    public int getCount() {return count; }
+    public int getDelay() { return delay; }
+    public int getFrame() { return currentFrame; }
+    public int getCount() { return count; }
     public BufferedImage getImage() { return frames[currentFrame]; }
-    public boolean hasPlayedOnce() {return timesPlayed > 0;}
-    public boolean hasPlayed(int i) {return TimesPlayed == i;}
+    public boolean hasPlayedOnce() { return timesPlayed > 0; }
+    public boolean hasPlayed(int i) { return timesPlayed == i; }
 }

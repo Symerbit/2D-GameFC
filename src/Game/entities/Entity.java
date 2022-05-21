@@ -2,6 +2,7 @@ package Game.entities;
 
 import Game.graphics.Animation;
 import Game.graphics.Sprite;
+import Game.util.AABB;
 import Game.util.KeyHandler;
 import Game.util.MouseHandler;
 import Game.util.Vector2f;
@@ -37,16 +38,34 @@ public abstract class Entity { //voor alle bewegende characters
     protected float acc; // acceleratie
     protected float deacc; //deactivatie
 
+    protected AABB hitBounds;
+    protected AABB bounds;
+
     public Entity(Sprite sprite, Vector2f orgin, int size) {
         this.sprite = sprite;
         pos = orgin;
         this.size = size;
 
+        bounds = new AABB(orgin, size, size);
+        hitBounds = new AABB(new Vector2f(orgin.x + (size / 2), orgin.y), size, size);
+
         ani = new Animation();
         setAnimation(RIGHT, sprite.getSpriteArray(RIGHT), 10);
     }
 
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+    public void setSize(int i) { size = i; }
+    public void setMaxSpeed(float f) { maxSpeed = f; }
+    public void setAcc(float f) { acc = f; }
+    public void setDeacc(float f) {deacc = f; }
+
+    public AABB getBounds() { return bounds; }
+
     public int getSize() { return size; }
+    public Animation getAnimation() { return ani; }
 
     public void setAnimation(int i, BufferedImage[] frames, int delay) {
         currentAnimation = i;
@@ -76,6 +95,25 @@ public abstract class Entity { //voor alle bewegende characters
             }
         } else {
             setAnimation(currentAnimation, sprite.getSpriteArray(currentAnimation), -1);
+        }
+    }
+
+    private void setHitBoxDirection() {
+        if(up) {
+            hitBounds.setYOffset(-size / 2);
+            hitBounds.setXOffset(-size / 2);
+        }
+        else if(down) {
+            hitBounds.setYOffset(size / 2);
+            hitBounds.setXOffset(-size / 2);
+        }
+        else if(left) {
+            hitBounds.setXOffset(-size);
+            hitBounds.setYOffset(0);
+        }
+        else if(right) {
+            hitBounds.setYOffset(0);
+            hitBounds.setXOffset(0);
         }
     }
 
