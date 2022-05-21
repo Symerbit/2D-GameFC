@@ -34,9 +34,9 @@ public abstract class Entity { //voor alle bewegende characters
     protected float dx; // direction x
     protected float dy; // direction y
 
-    protected float maxSpeed; //max snelheid
-    protected float acc; // acceleratie
-    protected float deacc; //deactivatie
+    protected float maxSpeed = 5f; //max snelheid
+    protected float acc = 3f; // acceleratie
+    protected float deacc = 0.5f; //deactivatie
 
     protected AABB hitBounds;
     protected AABB bounds;

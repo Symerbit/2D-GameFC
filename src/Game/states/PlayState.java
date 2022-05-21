@@ -30,7 +30,7 @@ public class PlayState extends GameState {
 
 
     public void render(Graphics2D g) {
-        Sprite.drawArray(g, font, "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", new Vector2f(100, 100), 32, 32, 32, 0);
+        Sprite.drawArray(g, font, "WAJO DAN DIKKE BEWEGING ENZO NIET BEST MAN", new Vector2f(100, 100), 32, 32, 32, 0);
         player.render(g);
     }
 }

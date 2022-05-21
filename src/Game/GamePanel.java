@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         init();
 
-        final double GAME_HERTZ = 60.0; //constant, veranderd niet
+        final double GAME_HERTZ = 144.0; //constant, veranderd niet
         final double TBU = 1000000000 / GAME_HERTZ; //timeBeforeUpdate
 
         final int MUBR = 5; //Must Updates Before Render
@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
         double lastUpdateTime = System.nanoTime(); // 1 * 10^-9 = 0.000000001
         double lastRenderTime;
 
-        final double TARGET_FPS = 60; //MAX FPS
+        final double TARGET_FPS = 144; //MAX FPS
         final double TTBR = 1000000000 / TARGET_FPS; // Totale tijd voor de render
 
         int frameCount = 0;
