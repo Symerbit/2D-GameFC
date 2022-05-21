@@ -85,7 +85,7 @@ public class Font {
 
         int x = value % wLetter;
         int y = value / wLetter;
-        System.out.println(x + ". " + y);
+        //System.out.println(x + ". " + y);   ----- counter
         return getLetter(x, y);
     }
 }
