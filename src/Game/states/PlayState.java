@@ -1,8 +1,10 @@
 package Game.states;
 
+import Game.GamePanel;
 import Game.entities.Player;
 import Game.graphics.Font;
 import Game.graphics.Sprite;
+import Game.tiles.TileManager;
 import Game.util.KeyHandler;
 import Game.util.MouseHandler;
 import Game.util.Vector2f;
@@ -13,11 +15,13 @@ public class PlayState extends GameState {
 
     private Font font;
     private Player player;
+    private TileManager tm;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        font = new Font("font/ZeldaFont.png", 16, 16);
-        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(300, 300), 64);
+        tm = new TileManager("tile/tilemap.xml");
+        font = new Font("font/font.png", 10, 10);
+        player = new Player(new Sprite("entity/linkFormatted.png"), new Vector2f(300, 300), 128);
     }
 
     public void update(){
@@ -28,9 +32,9 @@ public class PlayState extends GameState {
         player.input(mouse, key);
     }
 
-
     public void render(Graphics2D g) {
-        Sprite.drawArray(g, font, "WAJO DAN DIKKE BEWEGING ENZO NIET BEST MAN", new Vector2f(100, 100), 32, 32, 32, 0);
+        tm.render(g);
+        Sprite.drawArray(g, font, GamePanel.oldFrameCount + "FPS", new Vector2f(GamePanel.width - 192,32), 32, 32, 24, 0); //FPS
         player.render(g);
     }
 }

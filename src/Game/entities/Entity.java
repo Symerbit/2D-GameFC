@@ -3,8 +3,6 @@ package Game.entities;
 import Game.graphics.Animation;
 import Game.graphics.Sprite;
 import Game.util.AABB;
-import Game.util.KeyHandler;
-import Game.util.MouseHandler;
 import Game.util.Vector2f;
 
 import java.awt.*;
@@ -124,6 +122,5 @@ public abstract class Entity { //voor alle bewegende characters
     }
 
     public abstract void render(Graphics2D g);
-    public void input(KeyHandler key, MouseHandler mouse) {}
 
 }

@@ -12,6 +12,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int width;
     public static int height;
+    public static int oldFrameCount;
 
     private Thread thread;
     private boolean running = false;
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         int frameCount = 0;
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
-        int oldFrameCount = 0;
+        oldFrameCount = 0;
 
         while(running) { //Game Loop
             double now = System.nanoTime(); //Huidige Tijd
@@ -124,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void render () { //Image -> SCHERM
         if(g != null) {
-            g.setColor(new Color(66, 134, 244)); //window kleur
+            g.setColor(new Color(81, 244, 66)); //window kleur
             g.fillRect(0, 0, width, height); //afmetingen van window kleur
             gsm.render(g);
         }
