@@ -3,7 +3,8 @@ package Game.tiles.blocks;
 import Game.util.AABB;
 import Game.util.Vector2f;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 

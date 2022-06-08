@@ -25,8 +25,8 @@ public class TileMapNorm extends TileMap {
     }
 
     public void render(Graphics2D g) {
-        for(int i = 0; i < blocks.size(); i++) {
-            blocks.get(i).render(g);
+        for (Block block : blocks) {
+            block.render(g);
         }
     }
 }

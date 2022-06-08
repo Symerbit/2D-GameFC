@@ -34,14 +34,14 @@ public class TileManager {
         int tileHeight;
         int tileCount;
         int tileColumns;
-        int layer = 0;
+        int layers = 0;
         Sprite sprite;
 
         String[] data = new String[10];
 
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder= builderFactory.newDocumentBuilder();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document doc = builder.parse(new File(getClass().getClassLoader().getResource(path).toURI()));
             doc.getDocumentElement().normalize();
 
@@ -50,16 +50,17 @@ public class TileManager {
             Element eElement = (Element) node;
 
             imagePath = eElement.getAttribute("name");
-            tileWidth = Integer.parseInt(eElement.getAttribute("tileWidth"));
-            tileHeight = Integer.parseInt(eElement.getAttribute("tileHeight"));
-            tileCount = Integer.parseInt(eElement.getAttribute("tileCount"));
-            tileColumns = Integer.parseInt(eElement.getAttribute("Columns"));
+
+            tileWidth = Integer.parseInt(eElement.getAttribute("tilewidth"));
+            tileHeight = Integer.parseInt(eElement.getAttribute("tileheight"));
+            tileCount = Integer.parseInt(eElement.getAttribute("tilecount"));
+            tileColumns = Integer.parseInt(eElement.getAttribute("columns"));
             sprite = new Sprite("tile/" + imagePath + ".png", tileWidth, tileHeight);
 
             list = doc.getElementsByTagName("layer");
-            layer = list.getLength();
+            layers = list.getLength();
 
-            for(int i = 0; i < layer; i++) {
+            for(int i = 0; i < layers; i++) {
                 node = list.item(i);
                 eElement = (Element) node;
                 if(i <= 0) {
@@ -77,13 +78,15 @@ public class TileManager {
 
             }
         } catch(Exception e) {
-            System.out.println("ERROR-TILEMANAGER: cannot read tilemap");
+//            throw e.getCause();
+           System.out.println("ERROR: Cannot read Tilemap - Exception = " + e.getMessage());
+//            System.out.println("Exception = " + e.);
         }
     }
 
     public void render(Graphics2D g) {
-        for(int i = 0; i < tm.size(); i++) {
-            tm.get(i).render(g);
+        for (TileMap tileMap : tm) {
+            tileMap.render(g);
         }
     }
 }

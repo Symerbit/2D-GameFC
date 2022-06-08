@@ -125,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void render () { //Image -> SCHERM
         if(g != null) {
-            g.setColor(new Color(81, 244, 66)); //window kleur
+            //g.setColor(new Color(81, 244, 66)); //window kleur
             g.fillRect(0, 0, width, height); //afmetingen van window kleur
             gsm.render(g);
         }

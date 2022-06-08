@@ -1,6 +1,7 @@
 package Game.entities;
 
 import Game.graphics.Sprite;
+import Game.states.PlayState;
 import Game.util.KeyHandler;
 import Game.util.MouseHandler;
 import Game.util.Vector2f;
@@ -10,6 +11,13 @@ import java.awt.*;
 public class Player extends Entity {
     public Player(Sprite sprite, Vector2f orgin, int size) {
         super(sprite, orgin, size);
+        acc = 3f;
+        maxSpeed = 3f;
+        bounds.setWidth(42);
+        bounds.setHeight(25);
+        bounds.setXOffset(12);
+        bounds.setYOffset(40);
+
     }
 
     public void move() {
@@ -75,13 +83,21 @@ public class Player extends Entity {
     public void update() {
         super.update();
         move();
-        pos.x += dx;
-        pos.y += dy;
+        if(!bounds.collisionTile(dx, 0)) {
+            PlayState.map.x += dx;
+            pos.x += dx;
+        }
+        if(!bounds.collisionTile(0, dy)) {
+            PlayState.map.y += dy;
+            pos.y += dy;
+        }
     }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(ani.getImage(), (int) (pos.x), (int) (pos.y), size, size, null);
+        g.setColor(Color.blue);
+        g.drawRect((int) (pos.getWorldVar().x + bounds.getXOffset()), (int) (pos.getWorldVar().y + bounds.getYOffset()), (int) bounds.getWidth(), (int) bounds.getHeight());
+        g.drawImage(ani.getImage(), (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
 
     public void input(MouseHandler mouse, KeyHandler key) {
