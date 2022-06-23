@@ -78,15 +78,14 @@ public class TileManager {
 
             }
         } catch(Exception e) {
-//            throw e.getCause();
            System.out.println("ERROR: Cannot read Tilemap - Exception = " + e.getMessage());
-//            System.out.println("Exception = " + e.);
         }
     }
 
     public void render(Graphics2D g) {
         for (TileMap tileMap : tm) {
             tileMap.render(g);
+            g.setColor(Color.green);
         }
     }
 }

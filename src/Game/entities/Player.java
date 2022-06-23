@@ -9,15 +9,15 @@ import Game.util.Vector2f;
 import java.awt.*;
 
 public class Player extends Entity {
-    public Player(Sprite sprite, Vector2f orgin, int size) {
-        super(sprite, orgin, size);
+
+    public Player(Sprite sprite, Vector2f origin, int size) {
+        super(sprite, origin, size);
         acc = 3f;
         maxSpeed = 3f;
         bounds.setWidth(42);
-        bounds.setHeight(25);
-        bounds.setXOffset(12);
-        bounds.setYOffset(40);
-
+        bounds.setHeight(30);
+        bounds.setXOffset(30);
+        bounds.setYOffset(50);
     }
 
     public void move() {
@@ -95,7 +95,7 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.blue);
+        g.setColor(Color.green);
         g.drawRect((int) (pos.getWorldVar().x + bounds.getXOffset()), (int) (pos.getWorldVar().y + bounds.getYOffset()), (int) bounds.getWidth(), (int) bounds.getHeight());
         g.drawImage(ani.getImage(), (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
@@ -103,7 +103,7 @@ public class Player extends Entity {
     public void input(MouseHandler mouse, KeyHandler key) {
 
         if (mouse.getButton() == 1) {
-            System.out.println("Player: " + pos.x + ", " + pos.y);
+             System.out.println("Player: " + pos.x + ", " + pos.y);
         }
 
         if (key.up.down) {

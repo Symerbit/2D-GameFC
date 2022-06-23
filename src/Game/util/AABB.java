@@ -2,6 +2,8 @@ package Game.util;
 
 import Game.entities.Entity;
 import Game.tiles.TileMapObj;
+import Game.tiles.blocks.Block;
+import Game.tiles.blocks.HoleBlock;
 
 public class AABB { // AABB = Collision Class
 
@@ -11,7 +13,6 @@ public class AABB { // AABB = Collision Class
     private float w;
     private float h;
     private float r; // enemy chase
-
     private int size;
     private Entity e;
 
@@ -46,7 +47,6 @@ public class AABB { // AABB = Collision Class
     public void setCircle(Vector2f pos, int r, Entity e) {
         this.pos = pos;
         this.r = r;
-        this.e = e;
 
         size = r;
     }
@@ -54,9 +54,7 @@ public class AABB { // AABB = Collision Class
     public void setWidth(float f) { w = f; }
     public void setHeight(float f) { h = f; }
 
-    public void setXOffset(float f) {
-        xOffset = f;
-    }
+    public void setXOffset(float f) { xOffset = f; }
     public void setYOffset(float f) {
         yOffset = f;
     }
@@ -83,7 +81,7 @@ public class AABB { // AABB = Collision Class
         return false;
     }
 
-    public boolean colCircleBox(AABB aBox) { //collisions tussen circle en box
+    public boolean colCircleBox(AABB aBox) { //collisions circle en box
 
         float cx = (float) (pos.getWorldVar().x + r / Math.sqrt(2) - e.getSize() / Math.sqrt(2));
         float cy = (float) (pos.getWorldVar().y + r / Math.sqrt(2) - e.getSize() / Math.sqrt(2));
@@ -94,18 +92,40 @@ public class AABB { // AABB = Collision Class
         if((xDelta * xDelta + yDelta * yDelta)< ((this.r / Math.sqrt(2) * (this.r / Math.sqrt(2))))) {
             return true;
         }
-
         return false;
     }
 
-    public boolean collisionTile(float ax, float ay) {
+    public boolean collisionTile(float ax, float ay) { //can't go through
         for(int c = 0; c < 4; c++) {
 
             int xt = (int) ( (pos.x + ax) + (c % 2) * w + xOffset) / 64;
             int yt = (int) ( (pos.y + ay) + ((int) (c / 2)) * h + yOffset) / 64;
 
             if(TileMapObj.tmo_blocks.containsKey(String.valueOf(xt) + "," + String.valueOf(yt))) {
-                return TileMapObj.tmo_blocks.get(String.valueOf(xt) + "," + String.valueOf(yt)).update(this);
+                Block block = TileMapObj.tmo_blocks.get(String.valueOf(xt) + ", " + String.valueOf(yt));
+                if (block instanceof HoleBlock) {
+                    return collisionHole(ax, ay, xt, yt, block);
+                }
+                return block.update(this);
+            }
+        }
+
+        return false;
+    }
+
+    private boolean collisionHole(float ax, float ay, float xt, float yt, Block block) { //falls through
+
+        int nextXt = (int) ((( (pos.x + ax) + xOffset) / 64) + w / 64);
+        int nextYt = (int) ((( (pos.y + ay) + yOffset) / 64) + h / 64);
+
+        if((nextXt == yt + 1) || (nextXt == xt + 1)) {
+            if(TileMapObj.tmo_blocks.containsKey(String.valueOf(nextXt) +  ", " + String.valueOf(nextYt))) {
+              Block blockNeighbor = TileMapObj.tmo_blocks.get(String.valueOf(nextXt) + ", " + String.valueOf(nextYt));
+                return blockNeighbor.update(this);
+            }
+        } else {
+            if (block.isInside(this)) {
+                return block.update(this);
             }
         }
         return false;

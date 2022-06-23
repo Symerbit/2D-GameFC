@@ -82,7 +82,6 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         toggle(e, true);
-        System.out.println("TOETS!");
     }
 
     @Override
